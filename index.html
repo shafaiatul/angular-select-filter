@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>Angular Select Checkbox Filtering</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--Bootswatch CSS lib for paper theme-->
@@ -17,79 +17,170 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Brand</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">Angular Select Checkbox Filtering</a>
                 </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
-                </ul>
-                </div>
             </div>
         </nav>
 
         <div class="container" ng-controller="MyCtrl">
-            <ul class="breadcrumb">
-                <li class="active">Angular > Select > Filter</li>
-            </ul>
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="breadcrumb">
+                        <li class="active">Angular > Select > Checkbox Filtering</li>
+                    </ul>
 
-            <div class="jumbotron">
-                <select kendo-drop-down-list
-                    k-options="selectOptions"
-                    k-ng-model="selectedItem"
-                    k-on-change="change(kendoEvent)"
-                    style="width: 100%"></select>
-            </div>
-
-            <div>
-                <h4 ng-show="itemChosen">
-                    You chose {{selectedItem}}
-                </h4>
-            </div>
-
-            <div class="jumbotron" ng-if="selectedItem">
-                <div class="selected-item">
-                    <div class="checkbox" ng-repeat="category in selectedItem.categories">
-                        <label><input type="checkbox" >{{category.text}}</label>            
+                    <div class="jumbotron">
+                        <select kendo-drop-down-list
+                            k-options="selectOptions"
+                            k-ng-model="selectedItem"
+                            k-on-change="change(kendoEvent)"
+                            style="width: 100%"></select>
                     </div>
+
+                    <div>
+                        <h5 ng-if="itemChosen">
+                            You chose {{selectedItem}}
+                        </h5>
+                    </div>
+
+                    <div class="jumbotron" ng-if="itemChosen">
+                        
+                        <button class="btn" ng-click="checkAll()">Check All</button>&nbsp;
+                        <button class="btn" ng-click="uncheckAll()">Uncheck All</button>
+                        <br><br>
+                        <div class="selected-item">
+                            <div class="checkbox" ng-repeat="category in selectedItem.categories">
+                                <label>
+                                    <input 
+                                        type="checkbox" 
+                                        checklist-model="checkedItem.selectedItem.categories" 
+                                        checklist-value="category.id">
+                                        {{category.text}}
+                                </label>            
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div ng-if="checkedItem.selectedItem.categories.length > 0">
+                            <button class="btn btn-primary" ng-click="checkedItemSend()">Submit</button>
+                        </div>
+                        
+                        
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <pre>
+                                {{ checkedItem.selectedItem.categories | json }}
+                            </pre>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="lead">Final output:</p>
+                            <pre>
+                                {{ finalInfo | json }}
+                            </pre>
+                        </div>
+                    </div>
+
+                </div>
+                
+                
+
+                <div class="col-sm-6">
+                    <p class="lead text-center">Sample Data</p>
+                    <pre>
+                        [
+                            {
+                                "id":1,
+                                "name":"Teacher",
+                                "categories":[
+                                    {
+                                        "id":1,
+                                        "text":"School"
+                                    },
+                                    {
+                                        "id":2,
+                                        "text":"College"
+                                    },
+                                    {
+                                        "id":3,
+                                        "text":"University"
+                                    }
+                                ]
+                            },
+                            {
+                                "id":2,
+                                "name":"Engineer",
+                                "categories":[
+                                    {
+                                        "id":1,
+                                        "text":"Computer"
+                                    },
+                                    {
+                                        "id":2,
+                                        "text":"Civil"
+                                    },
+                                    {
+                                        "id":3,
+                                        "text":"Electrical"
+                                    }
+                                ]
+                            },
+                            {
+                                "id":3,
+                                "name":"Sportsman",
+                                "categories":[
+                                    {
+                                        "id":1,
+                                        "text":"Hockey"
+                                    },
+                                    {
+                                        "id":2,
+                                        "text":"Football"
+                                    },
+                                    {
+                                        "id":3,
+                                        "text":"Cricket"
+                                    }
+                                ]
+                            },
+                            {
+                                "id":4,
+                                "name":"Doctor",
+                                "categories":[
+                                    {
+                                        "id":1,
+                                        "text":"Medicine"
+                                    },
+                                    {
+                                        "id":2,
+                                        "text":"Gyn"
+                                    }
+                                ]
+                            }
+                            ]
+                    </pre>
                 </div>
             </div>
-            
-                <!--<div>
-                    <h4 ng-show="itemChosen">
-                        <p>You chose {{selectedItem.name}}</p>
-                        <p>your chosen categories are {{category}}</p>
 
-                    </h4>
-                </div>-->
+
+            
+                
 
         </div>
 
