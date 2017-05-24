@@ -7,7 +7,7 @@
         <!--Font Awesome-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!--Bootswatch CSS lib for paper theme-->
-        <link rel="stylesheet" href="lib/angular.min.css">
+        <link rel="stylesheet" href="lib/bootstrap.min.css">
         <!--Kendo material CSS lib-->
         <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common-material.min.css" />
         <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.material.min.css" />
@@ -15,7 +15,7 @@
         <!--Custom App CSS-->
         <link href="app.css" rel="stylesheet">
     </head>
-    <body ng-app="SelectFilter">
+    <body ng-app="SelectFilter" ng-cloak>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -32,158 +32,265 @@
         </nav>
 
         <div class="container" ng-controller="MyCtrl">
-            <div class="row">
-                <div class="col-sm-6">
-                    <ul class="breadcrumb">
-                        <li class="active">Angular > Select > Checkbox Filtering</li>
-                    </ul>
 
-                    <div class="jumbotron">
-                        <select kendo-drop-down-list
-                            k-options="selectOptions"
-                            k-ng-model="selectedItem"
-                            k-on-change="change(kendoEvent)"
-                            style="width: 100%"></select>
-                    </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="breadcrumb">
+                            <li class="active">Angular > Select > Checkbox Filtering</li>
+                        </ul>
+                 
 
-                    <div>
-                        <h5 ng-if="itemChosen">
-                            You chose {{selectedItem}}
-                        </h5>
-                    </div>
+                        <div class="jumbotron">
+                            <p class="text-muted">
+                                <i ng-if="!itemChosen" class="fa fa-arrow-right" aria-hidden="true"></i>
+                                <i ng-if="itemChosen" class="fa fa-check-circle-o" aria-hidden="true" style="color: #00cc00"></i>
+                                Select your Job
+                            </p>
 
-                    <div class="jumbotron" ng-if="itemChosen">
-                        
-                        <button class="btn" ng-click="checkAll()">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                            Check All
-                        </button>&nbsp;
-                        <button class="btn" ng-click="uncheckAll()">                           
-                            <i class="fa fa-ban" aria-hidden="true"></i>
-                            Uncheck All
-                        </button>
-                        <br><br>
-                        <div class="selected-item">
-                            <div class="checkbox" ng-repeat="category in selectedItem.categories">
-                                <label>
-                                    <input 
-                                        type="checkbox" 
-                                        checklist-model="checkedItem.selectedItem.categories" 
-                                        checklist-value="category.id">
-                                        {{category.text}}
-                                </label>            
+                            <select kendo-drop-down-list
+                                k-options="selectOptions"
+                                k-ng-model="selectedItem"
+                                k-on-change="change(kendoEvent)"
+                                style="width: 100%"></select>
+                        </div>
+
+
+                        <div class="jumbotron" ng-if="itemChosen">
+                            <div class="row">
+                                <!--Properties from jobs.json -->
+                                <div class="col-sm-6">
+
+                                    <p class="text-muted">
+                                        <i ng-if="checkedItem.selectedItem.categories.length <= 0" class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        <i ng-if="checkedItem.selectedItem.categories.length > 0" class="fa fa-check-circle-o" aria-hidden="true" style="color: #00cc00"></i>
+                                        Choose your Categories
+                                    </p>
+                                    
+                                    <button class="btn" ng-click="checkAllCategories()">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Check All Categories
+                                    </button>&nbsp;
+                                    <button class="btn" ng-click="uncheckAllCategories()">                           
+                                        <i class="fa fa-ban" aria-hidden="true"></i>
+                                        Uncheck All Categories
+                                    </button>
+                                    <br><br>
+                                    <div class="selected-item">
+                                        <div class="checkbox" ng-repeat="category in selectedItem.categories">
+                                            <label>
+                                                <input 
+                                                    type="checkbox" 
+                                                    checklist-model="checkedItem.selectedItem.categories" 
+                                                    data-checklist-value="category"
+                                                    ng-model="checked">
+                                                    {{category.text}}
+                                            </label>            
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--Properties from detail.json -->
+                                <div class="col-sm-6">
+
+                                    <p class="text-muted">
+                                        <i ng-if="checkedItem.selectedItem.expertises.length <= 0" class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        <i ng-if="checkedItem.selectedItem.expertises.length > 0" class="fa fa-check-circle-o" aria-hidden="true" style="color: #00cc00"></i>
+                                        Choose your Expertises
+                                    </p>
+
+                                    <button class="btn" ng-click="checkAllExpertise()">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Check All Expertise
+                                    </button>&nbsp;
+                                    <button class="btn" ng-click="uncheckAllExpertise()">                           
+                                        <i class="fa fa-ban" aria-hidden="true"></i>
+                                        Uncheck All Expertise
+                                    </button>
+                                    <br><br>
+                                    <div class="selected-item">
+                                        <div class="checkbox" ng-repeat="expertise in selectedItem.expertises">
+                                            
+                                            <h6>{{expertise.text}}</h6>
+                                                                                      
+                                                <label>
+                                                    <input 
+                                                        type="checkbox" 
+                                                        checklist-model="checkedItem.selectedItem.expertises" 
+                                                        checklist-value="expertise">
+                                                        {{expertise}}
+                                                </label>
+                                            
+                                           
+                                            
+                                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                            
+
+                            <br>
+
+                            <div class="row text-center" 
+                                ng-if="checkedItem.selectedItem.categories.length > 0 && checkedItem.selectedItem.expertises.length > 0">
+                                
+                                <button class="btn btn-primary" ng-click="checkedItemSend()">Submit</button>
+                            </div>
+                            
+                            
+                        </div>
+                    
+
+
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <pre>
+                                    {{ checkedItem.selectedItem.categories | json }}
+                                </pre>
+                            </div>
+                            <div class="col-sm-6">
+                                <pre>
+                                    {{ checkedItem.selectedItem.expertises | json }}
+                                </pre>
                             </div>
                         </div>
 
-                        <br>
+                        <hr>
 
-                        <div ng-if="checkedItem.selectedItem.categories.length > 0">
-                            <button class="btn btn-primary" ng-click="checkedItemSend()">Submit</button>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="lead">Final output:</p>
+                                <pre>
+                                    {{ finalInfo | json }}
+                                </pre>
+                            </div>
                         </div>
-                        
-                        
+
                     </div>
-
-
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <pre>
-                                {{ checkedItem.selectedItem.categories | json }}
-                            </pre>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <p class="lead">Final output:</p>
-                            <pre>
-                                {{ finalInfo | json }}
-                            </pre>
-                        </div>
-                    </div>
-
                 </div>
-                
-                
 
-                <div class="col-sm-6">
-                    <p class="lead text-center">Sample Data</p>
-                    <pre>
-                        [
-                            {
-                                "id":1,
-                                "name":"Teacher",
-                                "categories":[
-                                    {
-                                        "id":1,
-                                        "text":"School"
-                                    },
-                                    {
-                                        "id":2,
-                                        "text":"College"
-                                    },
-                                    {
-                                        "id":3,
-                                        "text":"University"
-                                    }
-                                ]
-                            },
-                            {
-                                "id":2,
-                                "name":"Engineer",
-                                "categories":[
-                                    {
-                                        "id":1,
-                                        "text":"Computer"
-                                    },
-                                    {
-                                        "id":2,
-                                        "text":"Civil"
-                                    },
-                                    {
-                                        "id":3,
-                                        "text":"Electrical"
-                                    }
-                                ]
-                            },
-                            {
-                                "id":3,
-                                "name":"Sportsman",
-                                "categories":[
-                                    {
-                                        "id":1,
-                                        "text":"Hockey"
-                                    },
-                                    {
-                                        "id":2,
-                                        "text":"Football"
-                                    },
-                                    {
-                                        "id":3,
-                                        "text":"Cricket"
-                                    }
-                                ]
-                            },
-                            {
-                                "id":4,
-                                "name":"Doctor",
-                                "categories":[
-                                    {
-                                        "id":1,
-                                        "text":"Medicine"
-                                    },
-                                    {
-                                        "id":2,
-                                        "text":"Gyn"
-                                    }
-                                ]
-                            }
+                <br><br>
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="lead text-center">Jobs Data</p>
+                        <pre>
+                            [
+                                {
+                                    "id":1,
+                                    "name":"Teacher",
+                                    "categories":[
+                                        {
+                                            "id":1,
+                                            "text":"School"
+                                        },
+                                        {
+                                            "id":2,
+                                            "text":"College"
+                                        },
+                                        {
+                                            "id":3,
+                                            "text":"University"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":2,
+                                    "name":"Engineer",
+                                    "categories":[
+                                        {
+                                            "id":1,
+                                            "text":"Computer"
+                                        },
+                                        {
+                                            "id":2,
+                                            "text":"Civil"
+                                        },
+                                        {
+                                            "id":3,
+                                            "text":"Electrical"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":3,
+                                    "name":"Sportsman",
+                                    "categories":[
+                                        {
+                                            "id":1,
+                                            "text":"Hockey"
+                                        },
+                                        {
+                                            "id":2,
+                                            "text":"Football"
+                                        },
+                                        {
+                                            "id":3,
+                                            "text":"Cricket"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id":4,
+                                    "name":"Doctor",
+                                    "categories":[
+                                        {
+                                            "id":1,
+                                            "text":"Medicine"
+                                        },
+                                        {
+                                            "id":2,
+                                            "text":"Gyn"
+                                        }
+                                    ]
+                                }
                             ]
-                    </pre>
+                        </pre>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p class="lead text-center">Detail Data</p>
+                        <pre>
+                            [
+                                {
+                                    "id":1,
+                                    "name":"Teacher",
+                                    "expertises":[
+                                        "Math", "Physics", "Chemistry", "Geography", "Computer Science"
+                                    ]
+                                },
+                                {
+                                    "id":2,
+                                    "name":"Engineer",
+                                    "expertises":[
+                                        "HTML", "CSS", "JS", "Soil Mechanics", "Structural Engineering", "Circuit"
+                                    ]
+                                },
+                                {
+                                    "id":3,
+                                    "name":"Sportsman",
+                                    "expertises":[
+                                        "Fast Bowler", "Spin Bowler", "Striker", "Batsman", "Defender"
+                                    ]
+                                },
+                                {
+                                    "id":4,
+                                    "name":"Doctor",
+                                    "expertises":[
+                                        "Anesthesiologists", "Cardiac surgeon", "Diabetologist", "Endocrinologist", "Nephrologist"
+                                    ]
+                                }
+                            ]
+                        </pre>
+                    </div>
                 </div>
+
+                
+
             </div>
 
 

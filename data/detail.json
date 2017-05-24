@@ -1,0 +1,30 @@
+[
+    {
+        "id":1,
+        "name":"Teacher",
+        "expertises":[
+            "Math", "Physics", "Chemistry", "Geography", "Computer Science"
+        ]
+    },
+    {
+        "id":2,
+        "name":"Engineer",
+        "expertises":[
+            "HTML", "CSS", "JS", "Soil Mechanics", "Structural Engineering", "Circuit"
+        ]
+    },
+    {
+        "id":3,
+        "name":"Sportsman",
+        "expertises":[
+            "Fast Bowler", "Spin Bowler", "Striker", "Batsman", "Defender"
+        ]
+    },
+    {
+        "id":4,
+        "name":"Doctor",
+        "expertises":[
+            "Anesthesiologists", "Cardiac surgeon", "Diabetologist", "Endocrinologist", "Nephrologist"
+        ]
+    }
+]
